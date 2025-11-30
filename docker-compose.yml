@@ -7,7 +7,7 @@ services:
     volumes:
       - tts-checkpoints:/data/checkpoints
     command: >
-      bash -c "pip install huggingface_hub && 
+      bash -c "pip install -U 'huggingface_hub[cli]' && 
       huggingface-cli download fishaudio/fish-speech-1.4 --local-dir /data/checkpoints"
 
   fish-speech:
