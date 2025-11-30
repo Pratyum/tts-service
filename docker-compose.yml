@@ -9,7 +9,7 @@ services:
     command: >
       bash -c "pip install --upgrade pip &&
       pip install 'huggingface_hub>=0.23.0' && 
-      python -m huggingface_hub.commands.huggingface_cli download fishaudio/fish-speech-1.4 --local-dir /data/checkpoints"
+      python3 -c \"from huggingface_hub import snapshot_download; snapshot_download(repo_id='fishaudio/fish-speech-1.4', local_dir='/data/checkpoints')\""
 
   fish-speech:
     image: fishaudio/fish-speech:latest-dev
