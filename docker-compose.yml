@@ -16,7 +16,7 @@ services:
     container_name: fish-speech
     ports:
       - "7860:7860" # WebUI
-      - "8080:8080" # API
+      - "8081:8080" # API (Mapped to 8081 to avoid conflict)
     volumes:
       - tts-checkpoints:/app/checkpoints
       - ./references:/app/references
