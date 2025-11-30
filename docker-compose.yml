@@ -8,8 +8,8 @@ services:
       - tts-checkpoints:/data/checkpoints
     command: >
       bash -c "pip install --upgrade pip &&
-      pip install 'huggingface_hub[cli]>=0.23.0' && 
-      huggingface-cli download fishaudio/fish-speech-1.4 --local-dir /data/checkpoints"
+      pip install 'huggingface_hub>=0.23.0' && 
+      python -m huggingface_hub.commands.huggingface_cli download fishaudio/fish-speech-1.4 --local-dir /data/checkpoints"
 
   fish-speech:
     image: fishaudio/fish-speech:latest-dev
