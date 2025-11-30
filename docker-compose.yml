@@ -23,13 +23,7 @@ services:
     environment:
       - GRADIO_SERVER_NAME=0.0.0.0
       - API_SERVER_NAME=0.0.0.0
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+      - BACKEND=cpu # Fallback to CPU since no GPU is available
     restart: unless-stopped
     depends_on:
       model-downloader:
