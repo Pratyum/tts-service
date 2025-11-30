@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  model-downloader:
+    image: python:3.10-slim
+    container_name: tts-model-downloader
+    volumes:
+      - tts-checkpoints:/data/checkpoints
+    command: >
+      bash -c "pip install huggingface_hub && 
+      huggingface-cli download fishaudio/fish-speech-1.4 --local-dir /data/checkpoints"
+
+  fish-speech:
+    image: fishaudio/fish-speech:latest-dev
+    container_name: fish-speech
+    ports:
+      - "7860:7860" # WebUI
+      - "8080:8080" # API
+    volumes:
+      - tts-checkpoints:/app/checkpoints
+      - ./references:/app/references
+    environment:
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - API_SERVER_NAME=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    depends_on:
+      model-downloader:
+        condition: service_completed_successfully
+
+volumes:
+  tts-checkpoints:
